@@ -1,7 +1,7 @@
 # Non-Canonical Two Particle Hamiltonian Monte Carlo(NCTP-HMC)
 Python implementatin of NCTP-HMC
 
-# Install
+# Installation
 You need to set Python environment, 'pip' or 'anaconda'
 ## Anaconda (in anaconda prompt)
 ```bash
@@ -18,7 +18,7 @@ You need to set Python environment, 'pip' or 'anaconda'
 ~/nctp-hmc$ . .venv/bin/activate
 (.venv) ~/nctp-hmc$ python3 -m pip3 -r requirements.txt
 ```
-## You can use any environment that can run tensorflow and numpy
+## **You can use any environment that can run tensorflow and numpy
 
 # File Structure
 ```
@@ -36,8 +36,8 @@ run.py            # Run specific experiment
 ```
 
 # Add an experiment
-1. Add a Python file into 'experiments' directory (e.g. 2d_gaussian.py)
-1. Write codes including 'main' function
+1. Add a Python file into 'experiments' directory (e.g. experiments/2d_gaussian.py)
+1. Write codes including 'main' function (test.py runs the 'main' function)
 1. Run command below
 ```bash
 ~/nctp-hmc$ python3 run.py 2d_gaussian
