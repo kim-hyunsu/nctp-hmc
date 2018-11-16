@@ -37,7 +37,7 @@ run.py            # Run specific experiment
 
 # Add an experiment
 1. Add a Python file into 'experiments' directory (e.g. experiments/2d_gaussian.py)
-1. Write codes including 'main' function (test.py runs the 'main' function)
+1. Write codes including 'main' function (run.py runs the 'main' function)
 1. Run command below
 ```bash
 ~/nctp-hmc$ python3 run.py 2d_gaussian
