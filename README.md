@@ -7,7 +7,7 @@ You need to set Python environment, 'pip' or 'anaconda'
 ```bash
 (base) ~$ git clone git@github.com:kim-hyunsu/nctp-hmc.git
 (base) ~$ cd nctp-hmc
-(base) ~$ conda install --yes --file requirements.txt
+(base) ~/nctp-hmc$ conda install --yes --file requirements.txt
 ```
 ## Virtual environment
 ```bash
