@@ -1,5 +1,5 @@
 \documentclass{article}
-
+\usepackage{bbm}
 % if you need to pass options to natbib, use, e.g.:
 %     \PassOptionsToPackage{numbers, compress}{natbib}
 % before loading neurips_2018
@@ -26,7 +26,7 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 
-\title{Formatting instructions for NeurIPS 2018}
+\title{Non-Canonical Hamiltonian Monte Carlo Algorithm for Two Particles}
 
 % The \author macro works with any number of authors. There are two commands
 % used to separate the names and addresses of multiple authors: \And and \AND.
@@ -37,35 +37,19 @@
 % \AND instead of \And before the third author name.
 
 \author{%
-  David S.~Hippocampus\thanks{Use footnote for providing further information
-    about author (webpage, alternative address)---\emph{not} for acknowledging
-    funding agencies.} \\
-  Department of Computer Science\\
-  Cranberry-Lemon University\\
-  Pittsburgh, PA 15213 \\
-  \texttt{hippo@cs.cranberry-lemon.edu} \\
+  Sihyun Yu\\
+  Department of Mathematics\\
+  KAIST\\
+  Yuseong-gu 291, Daejeon \\
+  \texttt{yusihyunc@kaist.ac.kr} \\
   % examples of more authors
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \AND
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-}
+  \And
+  Hyunsoo Kim\\
+  Department of Physics\\
+  KAIST\\
+  Yuseong-gu 291, Daejeon \\
+  \texttt{khszone02@kaist.ac.kr} \\
+  }
 
 \begin{document}
 % \nipsfinalcopy is no longer used
@@ -299,13 +283,289 @@ This package was used to typeset Table~\ref{sample-table}.
   \end{tabular}
 \end{table}
 
-\section{Final instructions}
+\section{Main Result}
+\subsection{Algorithm Background}
 
-Do not change any aspects of the formatting parameters in the style files.  In
-particular, do not modify the width or length of the rectangle the text should
-fit into, and do not change font sizes (except perhaps in the
-\textbf{References} section; see below). Please note that pages should be
-numbered.
+Consider the case we sample $q$ from the distribution $\pi(q)$. From now, we consider the case as sampling the distribution $\pi(q_1 , q_2 ) = \pi(q_1)\pi (q_2)$. (Copy and paste the target distribution) we assume $q_1$ and $q_2$ has the momentum, $p_1$ and $p_2$, respectively, with $p_1$, $p_2 \sim N(0,I)$. Then the Hamiltonian is defined by $\displaystyle H(q_1, q_2, p_1, p_2)  = U(q_1) +U(q_2)+\frac{1}{2}{p_1}^T p_1 + \frac{1}{2}{p_2}^T p_2$. We observe what happens to this assumption in non-canonical Hamiltonian dynamics with $A \in \mathbbm{R}^{4n \times 4n} $. We denote $A$ as
+\[
+A=
+\left[
+\begin{array}{c|c}
+E & F \\
+\hline
+-F^{T} & G
+\end{array}
+\right]
+\] where
+
+\[
+E=
+\left[
+\begin{array}{c|c}
+E_1 & E_2 \\
+\hline
+E_3 & E_4
+\end{array}
+\right] \in \mathbbm{R}^{2n \times 2n},
+\]
+\[
+F=
+\left[
+\begin{array}{c|c}
+F_1 & F_2 \\
+\hline
+F_3 & F_4
+\end{array}
+\right] \in \mathbbm{R}^{2n \times 2n},
+\]
+\[
+G=
+\left[
+\begin{array}{c|c}
+G_1 & G_2 \\
+\hline
+G_3 & G_4
+\end{array}
+\right] \in \mathbbm{R}^{2n \times 2n}.
+\]
+\\
+\noindent \textbf{Lemma 1.}  If $G_1 = G_4 = E_1 = E_4  = 0$ and $G_2^T + G_3$, $E_2^T + E_3$ are 0, (in other words, E, G are \textit{anti-symmetric} matrix). Then the \textit{non-canonical} Hamiltonian dynamics preserves $H$.
+\\
+\\
+\textit{proof.} The non-canonical hamiltonian dynamics is following: 
+\[
+\frac{d}{dt}
+\left[
+\begin{array}{ccc}
+q_1 \\
+q_2 \\
+p_1 \\
+p_2 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{cclcc}
+E_{1} & E_{2} & F_{1} & F_{2} \\
+E_3 & E_4 & F_3 & F_4 \\
+-F_1^T & -F_3^T & G_1 & G_2 \\
+-F_2^T & -F_4^T & G_3 & G_4 
+\end{array}
+\right]
+\left[
+\begin{array}{ccc}
+\nabla_{q_1} U(q_1) \\
+\nabla_{q_2} U(q_2) \\
+p_1 \\
+p_2 
+\end{array}
+\right]
+\] 
+Since $G_1 = G_4 = E_1 = E_4  = 0$,
+\[
+\left[
+\begin{array}{cclcc}
+E_{1} & E_{2} & F_{1} & F_{2} \\
+E_3 & E_4 & F_3 & F_4 \\
+-F_1^T & -F_3^T & G_1 & G_2 \\
+-F_2^T & -F_4^T & G_3 & G_4 
+\end{array}
+\right]
+\left[
+\begin{array}{ccc}
+\nabla_{q_1} U(q_1) \\
+\nabla_{q_2} U(q_2) \\
+p_1 \\
+p_2 
+\end{array}
+\right] = 
+\left[
+\begin{array}{ccc}
+E_2 \nabla_{q_2} U(q_2) + F_1 p_1 + F_2 p_2 \\
+E_3 \nabla_{q_1} U(q_1) + F_3 p_1 + F_4 p_4 \\
+-F_1^T \nabla_{q_1} U(q_1) - F_3^T \nabla_{q_2} U(q_2)  + G_2 p_2\\
+-F_2^T \nabla_{q_1} U(q_1) - F_4^T \nabla_{q_2} U(q_2)  + G_3 p_1\\
+\end{array}
+\right]
+\] 
+\\
+\\
+Also, note that the poisson bracket is 
+\begin{center}
+$\displaystyle\frac{dQ}{dt} = \sum_{i=1}^{2n} \frac{\partial Q} {\partial p_i} \frac{dp_i}{dt}+  \sum_{i=1}^{2n} \frac{\partial Q} {\partial q_i} \frac{dq_i}{dt}$ 
+\end{center}
+\noindent Therefore, putting previous evaluations, 
+\begin{center}
+$\displaystyle\frac{dQ}{dt} = (\nabla_{p_1}Q)^T (-F_1^T \nabla_{q_1} U(q_1) - F_3^T \nabla_{q_2} U(q_2)  + G_2 p_2) 
++  (\nabla_{p_2}Q)^T(-F_2^T \nabla_{q_1} U(q_1) - F_4^T \nabla_{q_2} U(q_2)  + G_3 p_1) 
++ (\nabla_{q_1}Q^T)(E_2 \nabla_{q_2} U(q_2) + F_1 p_1 + F_2 p_2) + (\nabla_{q_2}Q^T)(E_3 \nabla_{q_1} U(q_1) + F_3 p_1 + F_4 p_4)$.
+\end{center}
+This can be re-expressed as
+\begin{center}
+$\displaystyle\frac{dQ}{dt} = {(\nabla_{p_1}Q)^T}(-F_1^T \nabla_{q_1} U(q_1) - F_3^T\nabla_{q_2} U(q_2) ) +  
+(\nabla_{p_2}Q)^T(-F_2^T \nabla_{q_1} U(q_1) - F_4^T \nabla_{q_2} U(q_2)) +  
+(\nabla_{q_1}Q^T)( F_1 p_1 + F_2 p_2) +
+(\nabla_{q_2}Q^T)(F_3 p_1 + F_4 p_4) +
+(\nabla_{p_1}Q)^TG_2 p_2+ 
+(\nabla_{p_2}Q)^TG_3 p_1+
+(\nabla_{q_1}Q^T)E_2 \nabla_{q_2} U(q_2) +
+(\nabla_{q_2}Q^T)E_3 \nabla_{q_1} U(q_1)$.
+\end{center}
+Now, letting $Q=H$, we know 
+\begin{center}
+${(\nabla_{p_1}H)^T}(-F_1^T \nabla_{q_1} U(q_1) - F_3^T\nabla_{q_2} U(q_2) ) +  
+(\nabla_{p_2}H)^T(-F_2^T \nabla_{q_1} U(q_1) - F_4^T \nabla_{q_2} U(q_2)) +  
+(\nabla_{q_1}H^T)( F_1 p_1 + F_2 p_2) +
+(\nabla_{q_2}H^T)(F_3 p_1 + F_4 p_4)=0$.
+\end{center}
+Therefore, it is enough to find the condition for 
+\begin{center}
+$(\nabla_{p_1}H)^TG_2 p_2+ 
+(\nabla_{p_2}H)^TG_3 p_1+
+(\nabla_{q_1}H^T)E_2 \nabla_{q_2} U(q_2) +
+(\nabla_{q_2}H^T)E_3 \nabla_{q_1} U(q_1) = 0$.
+\end{center}
+By assumption of $H$, this is equivalent to 
+\begin{center}
+${p_1}^TG_2 p_2+ 
+{p_2}^TG_3 p_1+
+(\nabla_{q_1}U(q_1))^TE_2 \nabla_{q_2} U(q_2) +
+(\nabla_{q_2}U(q_2))^TE_3 \nabla_{q_1} U(q_1) $
+\\
+$={p_2}^T(G_2^T + G_3) p_1 + (\nabla_{q_2}U(q_2))^T(E_2^T + E_3) \nabla_{q_1} U(q_1) = 0$.
+\end{center}
+Since $G_2^T + G_3$ and $E_2^T + E_3 $ are zero, we completes the proof. 
+\\
+\\
+\noindent \textbf{Lemma 2.}  We can make \textit{leapfrog like integrator} in this dynamic system.
+\\
+\\
+\textit{proof.} We split our Hamiltonian into sub-Hamiltonians as follow :
+\begin{center}
+$\displaystyle H(q_1, q_2, p_1, p_2) = \frac{1}{2}U(q_1) + \frac{1}{2}U(q_2)+(\frac{1}{2}{p_1}^T p_1 + \frac{1}{2}{p_2}^T p_2 )+ \frac{1}{2}U(q_2) + \frac{1}{2}U(q_1) $, 
+\end{center}
+with $\displaystyle H_1 = \frac{1}{2}U(q_1)$, $\displaystyle H_2 = \frac{1}{2}U(q_2)$, $\displaystyle H_3 = \frac{1}{2}{p_1}^T p_1 + \frac{1}{2}{p_2}^T p_2 $. Then, the corresponding non-canonical dynamics for each Hamiltonian are following :
+\[
+H_1 : \frac{d}{dt}
+\left[
+\begin{array}{ccc}
+q_1 \\
+q_2 \\
+p_1 \\
+p_2 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{cclcc}
+0 & E_{2} & F_{1} & F_{2} \\
+E_3 & 0& F_3 & F_4 \\
+-F_1^T & -F_3^T & 0 & G_2 \\
+-F_2^T & -F_4^T & G_3 & 0 
+\end{array}
+\right]
+\left[
+\begin{array}{ccc}
+\nabla_{q_1} U(q_1) \\
+0 \\
+0 \\
+0 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{ccc}
+0 \\
+E_3 \nabla_{q_1} U(q_1) \\
+-F_1^T \nabla_{q_1} U(q_1) \\
+-F_2^T \nabla_{q_1} U(q_1) 
+\end{array}
+\right]
+\] 
+
+\[
+H_2 : \frac{d}{dt}
+\left[
+\begin{array}{ccc}
+q_1 \\
+q_2 \\
+p_1 \\
+p_2 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{cclcc}
+0 & E_{2} & F_{1} & F_{2} \\
+E_3 & 0& F_3 & F_4 \\
+-F_1^T & -F_3^T & 0 & G_2 \\
+-F_2^T & -F_4^T & G_3 & 0 
+\end{array}
+\right]
+\left[
+\begin{array}{ccc}
+0\\
+\nabla_{q_2} U(q_2)  \\
+0 \\
+0 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{ccc}
+E_2 \nabla_{q_2} U(q_2)  \\
+0 \\
+-F_3^T\nabla_{q_2} U(q_2) \\
+-F_4^T \nabla_{q_2} U(q_2) 
+\end{array}
+\right]
+\] 
+
+\[
+H_3 : \frac{d}{dt}
+\left[
+\begin{array}{ccc}
+q_1 \\
+q_2 \\
+p_1 \\
+p_2 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{cclcc}
+0 & E_{2} & F_{1} & F_{2} \\
+E_3 & 0& F_3 & F_4 \\
+-F_1^T & -F_3^T & 0 & G_2 \\
+-F_2^T & -F_4^T & G_3 & 0 
+\end{array}
+\right]
+\left[
+\begin{array}{ccc}
+0\\
+0  \\
+p_1 \\
+p_2
+\end{array}
+\right]
+=
+\left[
+\begin{array}{ccc}
+F_1 p_1 + F_2 p_2  \\
+F_3 p_1 + F_4 p_2  \\
+G_2 p_2 \\
+G_3 p_1 
+\end{array}
+\right]
+\] 
+which are all tractable. Therefore, for given $\epsilon > 0$, we can construct a leapfrog operator for $H$,
+\begin{center}
+$\displaystyle\Phi_{H,\epsilon} = \Phi_{H_1,\epsilon} \circ \Phi_{H_2,\epsilon} \circ \Phi_{H_3,\epsilon} \circ \Phi_{H_2,\epsilon} \circ \Phi_{H_1,\epsilon}$.
+\end{center}
+For time reversibility, we can add matrix flipping operators, which are volume preserving and self-inverse map. (Just have done in MHMC paper). So we completes the proof.
+\\
+\\
+We observed if $F_2 = F_3 = 0$, this is the case we wanted for two-particle interaction sampling case. We have not found if there is a corresponding dynamic system in physics and which selection of $E$ and $G$ would be helpful.
 
 \section{Preparing PDF files}
 
