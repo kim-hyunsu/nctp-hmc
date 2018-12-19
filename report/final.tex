@@ -25,6 +25,8 @@
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 \title{Non-Canonical Hamiltonian Monte Carlo Algorithm for Two Particles}
 
@@ -57,234 +59,14 @@
 \maketitle
 
 \begin{abstract}
-  The abstract paragraph should be indented \nicefrac{1}{2}~inch (3~picas) on
-  both the left- and right-hand margins. Use 10~point type, with a vertical
-  spacing (leading) of 11~points.  The word \textbf{Abstract} must be centered,
-  bold, and in point size 12. Two line spaces precede the abstract. The abstract
-  must be limited to one paragraph.
-\end{abstract}
+Probabilistic inference is one of the important concepts in machine learning. However, many problems still exist while sampling from high dimensional distribution or multimodal distributions. Many researchers try to solve this problem using existing physical concepts. We propose a new algorithm using non-canonical Hamiltonian dynamics and copied and pasted independent probabilistic distribution.  In this algorithm, two particles interacts each other while sampling the one target distribution. This interaction might solve existing problems in probabilistic sampling since interaction can make the trace of each particle more broadly.   
+ \end{abstract}
+\section{Introduction}
+\section{Research Purpose}
+\section{Theoretical Background}
+\section{Results}
 
-\section{Submission of papers to NeurIPS 2018}
-
-NeurIPS requires electronic submissions.  The electronic submission site is
-\begin{center}
-  \url{https://cmt.research.microsoft.com/NeurIPS2018/}
-\end{center}
-
-Please read the instructions below carefully and follow them faithfully.
-
-\subsection{Style}
-
-Papers to be submitted to NeurIPS 2018 must be prepared according to the
-instructions presented here. Papers may only be up to eight pages long,
-including figures. Additional pages \emph{containing only acknowledgments and/or
-  cited references} are allowed. Papers that exceed eight pages of content
-(ignoring references) will not be reviewed, or in any other way considered for
-presentation at the conference.
-
-The margins in 2018 are the same as since 2007, which allow for $\sim$$15\%$
-more words in the paper compared to earlier years.
-
-Authors are required to use the NeurIPS \LaTeX{} style files obtainable at the
-NeurIPS website as indicated below. Please make sure you use the current files
-and not previous versions. Tweaking the style files may be grounds for
-rejection.
-
-\subsection{Retrieval of style files}
-
-The style files for NeurIPS and other conference information are available on
-the World Wide Web at
-\begin{center}
-  \url{http://www.neurips.cc/}
-\end{center}
-The file \verb+neurips_2018.pdf+ contains these instructions and illustrates the
-various formatting requirements your NeurIPS paper must satisfy.
-
-The only supported style file for NeurIPS 2018 is \verb+neurips_2018.sty+,
-rewritten for \LaTeXe{}.  \textbf{Previous style files for \LaTeX{} 2.09,
-  Microsoft Word, and RTF are no longer supported!}
-
-The \LaTeX{} style file contains three optional arguments: \verb+final+, which
-creates a camera-ready copy, \verb+preprint+, which creates a preprint for
-submission to, e.g., arXiv, and \verb+nonatbib+, which will not load the
-\verb+natbib+ package for you in case of package clash.
-
-\paragraph{New preprint option for 2018}
-If you wish to post a preprint of your work online, e.g., on arXiv, using the
-NeurIPS style, please use the \verb+preprint+ option. This will create a
-nonanonymized version of your work with the text ``Preprint. Work in progress.''
-in the footer. This version may be distributed as you see fit. Please \textbf{do
-  not} use the \verb+final+ option, which should \textbf{only} be used for
-papers accepted to NeurIPS.
-
-At submission time, please omit the \verb+final+ and \verb+preprint+
-options. This will anonymize your submission and add line numbers to aid
-review. Please do \emph{not} refer to these line numbers in your paper as they
-will be removed during generation of camera-ready copies.
-
-The file \verb+neurips_2018.tex+ may be used as a ``shell'' for writing your
-paper. All you have to do is replace the author, title, abstract, and text of
-the paper with your own.
-
-The formatting instructions contained in these style files are summarized in
-Sections \ref{gen_inst}, \ref{headings}, and \ref{others} below.
-
-\section{General formatting instructions}
-\label{gen_inst}
-
-The text must be confined within a rectangle 5.5~inches (33~picas) wide and
-9~inches (54~picas) long. The left margin is 1.5~inch (9~picas).  Use 10~point
-type with a vertical spacing (leading) of 11~points.  Times New Roman is the
-preferred typeface throughout, and will be selected for you by default.
-Paragraphs are separated by \nicefrac{1}{2}~line space (5.5 points), with no
-indentation.
-
-The paper title should be 17~point, initial caps/lower case, bold, centered
-between two horizontal rules. The top rule should be 4~points thick and the
-bottom rule should be 1~point thick. Allow \nicefrac{1}{4}~inch space above and
-below the title to rules. All pages should start at 1~inch (6~picas) from the
-top of the page.
-
-For the final version, authors' names are set in boldface, and each name is
-centered above the corresponding address. The lead author's name is to be listed
-first (left-most), and the co-authors' names (if different address) are set to
-follow. If there is only one co-author, list both author and co-author side by
-side.
-
-Please pay special attention to the instructions in Section \ref{others}
-regarding figures, tables, acknowledgments, and references.
-
-\section{Headings: first level}
-\label{headings}
-
-All headings should be lower case (except for first word and proper nouns),
-flush left, and bold.
-
-First-level headings should be in 12-point type.
-
-\subsection{Headings: second level}
-
-Second-level headings should be in 10-point type.
-
-\subsubsection{Headings: third level}
-
-Third-level headings should be in 10-point type.
-
-\paragraph{Paragraphs}
-
-There is also a \verb+\paragraph+ command available, which sets the heading in
-bold, flush left, and inline with the text, with the heading followed by 1\,em
-of space.
-
-\section{Citations, figures, tables, references}
-\label{others}
-
-These instructions apply to everyone.
-
-\subsection{Citations within the text}
-
-The \verb+natbib+ package will be loaded for you by default.  Citations may be
-author/year or numeric, as long as you maintain internal consistency.  As to the
-format of the references themselves, any style is acceptable as long as it is
-used consistently.
-
-The documentation for \verb+natbib+ may be found at
-\begin{center}
-  \url{http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf}
-\end{center}
-Of note is the command \verb+\citet+, which produces citations appropriate for
-use in inline text.  For example,
-\begin{verbatim}
-   \citet{hasselmo} investigated\dots
-\end{verbatim}
-produces
-\begin{quote}
-  Hasselmo, et al.\ (1995) investigated\dots
-\end{quote}
-
-If you wish to load the \verb+natbib+ package with options, you may add the
-following before loading the \verb+neurips_2018+ package:
-\begin{verbatim}
-   \PassOptionsToPackage{options}{natbib}
-\end{verbatim}
-
-If \verb+natbib+ clashes with another package you load, you can add the optional
-argument \verb+nonatbib+ when loading the style file:
-\begin{verbatim}
-   \usepackage[nonatbib]{neurips_2018}
-\end{verbatim}
-
-As submission is double blind, refer to your own published work in the third
-person. That is, use ``In the previous work of Jones et al.\ [4],'' not ``In our
-previous work [4].'' If you cite your other papers that are not widely available
-(e.g., a journal paper under review), use anonymous author names in the
-citation, e.g., an author of the form ``A.\ Anonymous.''
-
-\subsection{Footnotes}
-
-Footnotes should be used sparingly.  If you do require a footnote, indicate
-footnotes with a number\footnote{Sample of the first footnote.} in the
-text. Place the footnotes at the bottom of the page on which they appear.
-Precede the footnote with a horizontal rule of 2~inches (12~picas).
-
-Note that footnotes are properly typeset \emph{after} punctuation
-marks.\footnote{As in this example.}
-
-\subsection{Figures}
-
-\begin{figure}
-  \centering
-  \fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
-  \caption{Sample figure caption.}
-\end{figure}
-
-All artwork must be neat, clean, and legible. Lines should be dark enough for
-purposes of reproduction. The figure number and caption always appear after the
-figure. Place one line space before the figure caption and one line space after
-the figure. The figure caption should be lower case (except for first word and
-proper nouns); figures are numbered consecutively.
-
-You may use color figures.  However, it is best for the figure captions and the
-paper body to be legible if the paper is printed in either black/white or in
-color.
-
-\subsection{Tables}
-
-All tables must be centered, neat, clean and legible.  The table number and
-title always appear before the table.  See Table~\ref{sample-table}.
-
-Place one line space before the table title, one line space after the
-table title, and one line space after the table. The table title must
-be lower case (except for first word and proper nouns); tables are
-numbered consecutively.
-
-Note that publication-quality tables \emph{do not contain vertical rules.} We
-strongly suggest the use of the \verb+booktabs+ package, which allows for
-typesetting high-quality, professional tables:
-\begin{center}
-  \url{https://www.ctan.org/pkg/booktabs}
-\end{center}
-This package was used to typeset Table~\ref{sample-table}.
-
-\begin{table}
-  \caption{Sample table title}
-  \label{sample-table}
-  \centering
-  \begin{tabular}{lll}
-    \toprule
-    \multicolumn{2}{c}{Part}                   \\
-    \cmidrule(r){1-2}
-    Name     & Description     & Size ($\mu$m) \\
-    \midrule
-    Dendrite & Input terminal  & $\sim$100     \\
-    Axon     & Output terminal & $\sim$10      \\
-    Soma     & Cell body       & up to $10^6$  \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\section{Main Result}
-\subsection{Algorithm Background}
+\subsection{Algorithmic Background}
 
 Consider the case we sample $q$ from the distribution $\pi(q)$. From now, we consider the case as sampling the distribution $\pi(q_1 , q_2 ) = \pi(q_1)\pi (q_2)$. (Copy and paste the target distribution) we assume $q_1$ and $q_2$ has the momentum, $p_1$ and $p_2$, respectively, with $p_1$, $p_2 \sim N(0,I)$. Then the Hamiltonian is defined by $\displaystyle H(q_1, q_2, p_1, p_2)  = U(q_1) +U(q_2)+\frac{1}{2}{p_1}^T p_1 + \frac{1}{2}{p_2}^T p_2$. We observe what happens to this assumption in non-canonical Hamiltonian dynamics with $A \in \mathbbm{R}^{4n \times 4n} $. We denote $A$ as
 \[
@@ -329,6 +111,7 @@ G_3 & G_4
 \right] \in \mathbbm{R}^{2n \times 2n}.
 \]
 \\
+
 \noindent \textbf{Lemma 1.}  If $G_1 = G_4 = E_1 = E_4  = 0$ and $G_2^T + G_3$, $E_2^T + E_3$ are 0, (in other words, E, G are \textit{anti-symmetric} matrix). Then the \textit{non-canonical} Hamiltonian dynamics preserves $H$.
 \\
 \\
@@ -391,49 +174,47 @@ E_3 \nabla_{q_1} U(q_1) + F_3 p_1 + F_4 p_4 \\
 \\
 \\
 Also, note that the poisson bracket is 
-\begin{center}
-$\displaystyle\frac{dQ}{dt} = \sum_{i=1}^{2n} \frac{\partial Q} {\partial p_i} \frac{dp_i}{dt}+  \sum_{i=1}^{2n} \frac{\partial Q} {\partial q_i} \frac{dq_i}{dt}$ 
-\end{center}
+
+$$\displaystyle\frac{dQ}{dt} = \sum_{i=1}^{2n} \frac{\partial Q} {\partial p_i} \frac{dp_i}{dt}+  \sum_{i=1}^{2n} \frac{\partial Q} {\partial q_i} \frac{dq_i}{dt}$$
+
 \noindent Therefore, putting previous evaluations, 
-\begin{center}
-$\displaystyle\frac{dQ}{dt} = (\nabla_{p_1}Q)^T (-F_1^T \nabla_{q_1} U(q_1) - F_3^T \nabla_{q_2} U(q_2)  + G_2 p_2) 
-+  (\nabla_{p_2}Q)^T(-F_2^T \nabla_{q_1} U(q_1) - F_4^T \nabla_{q_2} U(q_2)  + G_3 p_1) 
-+ (\nabla_{q_1}Q^T)(E_2 \nabla_{q_2} U(q_2) + F_1 p_1 + F_2 p_2) + (\nabla_{q_2}Q^T)(E_3 \nabla_{q_1} U(q_1) + F_3 p_1 + F_4 p_4)$.
-\end{center}
+$$\displaystyle\frac{dQ}{dt}
+ = (\nabla_{p_1}Q)^T (-F_1^T \nabla_{q_1} U(q_1) - F_3^T \nabla_{q_2} U(q_2)  + G_2 p_2) 
++  (\nabla_{p_2}Q)^T(-F_2^T \nabla_{q_1} U(q_1) - F_4^T \nabla_{q_2} U(q_2) $$ $$ + G_3 p_1) 
++ (\nabla_{q_1}Q^T)(E_2 \nabla_{q_2} U(q_2) + F_1 p_1 + F_2 p_2) + (\nabla_{q_2}Q^T)(E_3 \nabla_{q_1} U(q_1) + F_3 p_1 + F_4 p_4)$$
+
 This can be re-expressed as
-\begin{center}
-$\displaystyle\frac{dQ}{dt} = {(\nabla_{p_1}Q)^T}(-F_1^T \nabla_{q_1} U(q_1) - F_3^T\nabla_{q_2} U(q_2) ) +  
-(\nabla_{p_2}Q)^T(-F_2^T \nabla_{q_1} U(q_1) - F_4^T \nabla_{q_2} U(q_2)) +  
-(\nabla_{q_1}Q^T)( F_1 p_1 + F_2 p_2) +
+
+$$\displaystyle\frac{dQ}{dt} = {(\nabla_{p_1}Q)^T}(-F_1^T \nabla_{q_1} U(q_1) - F_3^T\nabla_{q_2} U(q_2) ) +  
+(\nabla_{p_2}Q)^T(-F_2^T \nabla_{q_1} U(q_1) - F_4^T \nabla_{q_2} U(q_2)) $$
+$$+(\nabla_{q_1}Q^T)( F_1 p_1 + F_2 p_2) +
 (\nabla_{q_2}Q^T)(F_3 p_1 + F_4 p_4) +
 (\nabla_{p_1}Q)^TG_2 p_2+ 
-(\nabla_{p_2}Q)^TG_3 p_1+
-(\nabla_{q_1}Q^T)E_2 \nabla_{q_2} U(q_2) +
-(\nabla_{q_2}Q^T)E_3 \nabla_{q_1} U(q_1)$.
-\end{center}
+(\nabla_{p_2}Q)^TG_3 p_1$$
+$$+(\nabla_{q_1}Q^T)E_2 \nabla_{q_2} U(q_2) +(\nabla_{q_2}Q^T)E_3 \nabla_{q_1} U(q_1)$$.
+
 Now, letting $Q=H$, we know 
-\begin{center}
-${(\nabla_{p_1}H)^T}(-F_1^T \nabla_{q_1} U(q_1) - F_3^T\nabla_{q_2} U(q_2) ) +  
-(\nabla_{p_2}H)^T(-F_2^T \nabla_{q_1} U(q_1) - F_4^T \nabla_{q_2} U(q_2)) +  
+
+$${(\nabla_{p_1}H)^T}(-F_1^T \nabla_{q_1} U(q_1) - F_3^T\nabla_{q_2} U(q_2) ) +  (\nabla_{p_2}H)^T(-F_2^T \nabla_{q_1} U(q_1) - F_4^T \nabla_{q_2} U(q_2)) $$
+$$+  
 (\nabla_{q_1}H^T)( F_1 p_1 + F_2 p_2) +
-(\nabla_{q_2}H^T)(F_3 p_1 + F_4 p_4)=0$.
-\end{center}
+(\nabla_{q_2}H^T)(F_3 p_1 + F_4 p_4)=0$$.
+
 Therefore, it is enough to find the condition for 
-\begin{center}
-$(\nabla_{p_1}H)^TG_2 p_2+ 
+
+$$(\nabla_{p_1}H)^TG_2 p_2+ 
 (\nabla_{p_2}H)^TG_3 p_1+
 (\nabla_{q_1}H^T)E_2 \nabla_{q_2} U(q_2) +
-(\nabla_{q_2}H^T)E_3 \nabla_{q_1} U(q_1) = 0$.
-\end{center}
+(\nabla_{q_2}H^T)E_3 \nabla_{q_1} U(q_1) = 0$$.
+
 By assumption of $H$, this is equivalent to 
-\begin{center}
-${p_1}^TG_2 p_2+ 
+
+$${p_1}^TG_2 p_2+ 
 {p_2}^TG_3 p_1+
 (\nabla_{q_1}U(q_1))^TE_2 \nabla_{q_2} U(q_2) +
-(\nabla_{q_2}U(q_2))^TE_3 \nabla_{q_1} U(q_1) $
-\\
-$={p_2}^T(G_2^T + G_3) p_1 + (\nabla_{q_2}U(q_2))^T(E_2^T + E_3) \nabla_{q_1} U(q_1) = 0$.
-\end{center}
+(\nabla_{q_2}U(q_2))^TE_3 \nabla_{q_1} U(q_1) $$
+$$={p_2}^T(G_2^T + G_3) p_1 + (\nabla_{q_2}U(q_2))^T(E_2^T + E_3) \nabla_{q_1} U(q_1) = 0$$
+
 Since $G_2^T + G_3$ and $E_2^T + E_3 $ are zero, we completes the proof. 
 \\
 \\
@@ -441,10 +222,13 @@ Since $G_2^T + G_3$ and $E_2^T + E_3 $ are zero, we completes the proof.
 \\
 \\
 \textit{proof.} We split our Hamiltonian into sub-Hamiltonians as follow :
-\begin{center}
-$\displaystyle H(q_1, q_2, p_1, p_2) = \frac{1}{2}U(q_1) + \frac{1}{2}U(q_2)+(\frac{1}{2}{p_1}^T p_1 + \frac{1}{2}{p_2}^T p_2 )+ \frac{1}{2}U(q_2) + \frac{1}{2}U(q_1) $, 
-\end{center}
-with $\displaystyle H_1 = \frac{1}{2}U(q_1)$, $\displaystyle H_2 = \frac{1}{2}U(q_2)$, $\displaystyle H_3 = \frac{1}{2}{p_1}^T p_1 + \frac{1}{2}{p_2}^T p_2 $. Then, the corresponding non-canonical dynamics for each Hamiltonian are following :
+
+$$\displaystyle H(q_1, q_2, p_1, p_2) = \frac{1}{2}U(q_1) + \frac{1}{2}U(q_2)+(\frac{1}{2}{p_1}^T p_1 + \frac{1}{2}{p_2}^T p_2 )+ \frac{1}{2}U(q_2) + \frac{1}{2}U(q_1) $$, 
+
+with $$\displaystyle H_1 = \frac{1}{2}U(q_1)$$ $$\displaystyle H_2 = \frac{1}{2}U(q_2)$$ $$\displaystyle H_3 = \frac{1}{2}{p_1}^T p_1 + \frac{1}{2}{p_2}^T p_2 $$
+
+Then, the corresponding non-canonical dynamics for each Hamiltonian are following :
+
 \[
 H_1 : \frac{d}{dt}
 \left[
@@ -558,105 +342,48 @@ G_3 p_1
 \end{array}
 \right]
 \] 
-which are all tractable. Therefore, for given $\epsilon > 0$, we can construct a leapfrog operator for $H$,
-\begin{center}
-$\displaystyle\Phi_{H,\epsilon} = \Phi_{H_1,\epsilon} \circ \Phi_{H_2,\epsilon} \circ \Phi_{H_3,\epsilon} \circ \Phi_{H_2,\epsilon} \circ \Phi_{H_1,\epsilon}$.
-\end{center}
-For time reversibility, we can add matrix flipping operators, which are volume preserving and self-inverse map. (Just have done in MHMC paper). So we completes the proof.
+
+which are all tractable. Therefore, for given $\epsilon > 0$ and $L$, we can construct a leapfrog operator for $H$
+
+$$\displaystyle\Phi_{H,\epsilon} = \Phi_{H_1,\epsilon} \circ \Phi_{H_2,\epsilon} \circ \Phi_{H_3,\epsilon} \circ \Phi_{H_2,\epsilon} \circ \Phi_{H_1,\epsilon}$$
+
+
+\noindent \textbf{Theorem 1.} There exists an operator for the probabilistic sampling operator in non-canonical Hamiltonian dynamics with two particles interacts each other.   
 \\
 \\
-We observed if $F_2 = F_3 = 0$, this is the case we wanted for two-particle interaction sampling case. We have not found if there is a corresponding dynamic system in physics and which selection of $E$ and $G$ would be helpful.
+\textit{proof.} Note that $E$, $G$ and $p$ must be flipped for each loop in non-canonical Hamiltonian dynamics for time reversibility. Therefore, by adding these operators and the operator earned in \textbf{Lemma 2}, we earn the following volume-preserving, self-inverse, time-reversible operator for our algorithm. The operator is given as follows:
 
-\section{Preparing PDF files}
+$$\displaystyle\tilde{\Phi}_{H,\epsilon} = \Phi_{p} \circ \Phi_{E,G} \circ (\Phi_{H_1,\epsilon} \circ \Phi_{H_2,\epsilon} \circ \Phi_{H_3,\epsilon} \circ \Phi_{H_2,\epsilon} \circ \Phi_{H_1,\epsilon})^L$$
 
-Please prepare submission files with paper size ``US Letter,'' and not, for
-example, ``A4.''
+Therefore, we can make an algorithm for sampling by making a loop with flipping block matrices and momentum (sampled by standard normal), and doing leapfrog steps with given step size $\epsilon$ (local) and $L$ (global). 
 
-Fonts were the main cause of problems in the past years. Your PDF file must only
-contain Type 1 or Embedded TrueType fonts. Here are a few instructions to
-achieve this.
+\section{Conclusion}
 
-\begin{itemize}
+Probability density sampling algorithms are very important for probabilistic inference, since it is hard to evaluate the exact value and functions with closed form in most cases. However, pre-existing probabilistic density sampling algorithms for probabilistic inferences still have problems in multimodal distributions or high-dimensional cases. Therefore, in this research, we tried to apply many existing physical theories such as Noether's Theorem, non-canonical Hamiltonian dynamics to propose better probabilistic inference algorithm for these situations. 
 
-\item You should directly generate PDF files using \verb+pdflatex+.
+Applying non-canonical Hamiltonian dynamics with independent probability distribution and two particles, we proposed two particle sampling algorithm for density sampling interacting each other. We copied and pasted the target distribution that we want to sample for making the assumption for independent distribution, and used non-canonical Hamiltonian dynamics to make interaction between these two particles. By interacting each other via non-canonical Hamiltonian dynamics, particles can be sampled in more various situation and get various traces. Setting proper parameters for two particles' interaction by real implementation and experiments, we expect more efficient, broad probabilistic density sampling will be available.  
 
-\item You can check which fonts a PDF files uses.  In Acrobat Reader, select the
-  menu Files$>$Document Properties$>$Fonts and select Show All Fonts. You can
-  also use the program \verb+pdffonts+ which comes with \verb+xpdf+ and is
-  available out-of-the-box on most Linux machines.
+\section{Further Research}
 
-\item The IEEE has recommendations for generating PDF files whose fonts are also
-  acceptable for NeurIPS. Please see
-  \url{http://www.emfield.org/icuwb2010/downloads/IEEE-PDF-SpecV32.pdf}
+We theoretically verified sampling algorithms for multiple particles with interaction is possible. Yet, we don't know this algorithm gives better results via interaction in real. Therefore, based on the real implementation of our results, setting various parameters and distribution, we need to check which interaction made by certain parameters could make the sampling more efficiently. 
 
-\item \verb+xfig+ "patterned" shapes are implemented with bitmap fonts.  Use
-  "solid" shapes instead.
-
-\item The \verb+\bbold+ package almost always uses bitmap fonts.  You should use
-  the equivalent AMS Fonts:
-\begin{verbatim}
-   \usepackage{amsfonts}
-\end{verbatim}
-followed by, e.g., \verb+\mathbb{R}+, \verb+\mathbb{N}+, or \verb+\mathbb{C}+
-for $\mathbb{R}$, $\mathbb{N}$ or $\mathbb{C}$.  You can also use the following
-workaround for reals, natural and complex:
-\begin{verbatim}
-   \newcommand{\RR}{I\!\!R} %real numbers
-   \newcommand{\Nat}{I\!\!N} %natural numbers
-   \newcommand{\CC}{I\!\!\!\!C} %complex numbers
-\end{verbatim}
-Note that \verb+amsfonts+ is automatically loaded by the \verb+amssymb+ package.
-
-\end{itemize}
-
-If your file contains type 3 fonts or non embedded TrueType fonts, we will ask
-you to fix it.
-
-\subsection{Margins in \LaTeX{}}
-
-Most of the margin problems come from figures positioned by hand using
-\verb+\special+ or other commands. We suggest using the command
-\verb+\includegraphics+ from the \verb+graphicx+ package. Always specify the
-figure width as a multiple of the line width as in the example below:
-\begin{verbatim}
-   \usepackage[pdftex]{graphicx} ...
-   \includegraphics[width=0.8\linewidth]{myfile.pdf}
-\end{verbatim}
-See Section 4.4 in the graphics bundle documentation
-(\url{http://mirrors.ctan.org/macros/latex/required/graphics/grfguide.pdf})
-
-A number of width problems arise when \LaTeX{} cannot properly hyphenate a
-line. Please give LaTeX hyphenation hints using the \verb+\-+ command when
-necessary.
-
-\subsubsection*{Acknowledgments}
-
-Use unnumbered third level headings for the acknowledgments. All acknowledgments
-go at the end of the paper. Do not include acknowledgments in the anonymized
-submission, only in the final paper.
+Furthermore, our algorithm can be generalized with more than 2 particles, not just 2 particles. If our algorithm is efficient with multimodal distribution sampling, we can increase more particles by the number of nodes in distributions.  By balancing the efficiency earned by interaction and increased computation time via increasing the particle, we can optimize the number for sampling for given distribution to sample.
 
 \section*{References}
 
-References follow the acknowledgments. Use unnumbered first-level heading for
-the references. Any choice of citation style is acceptable as long as you are
-consistent. It is permissible to reduce the font size to \verb+small+ (9 point)
-when listing the references. {\bf Remember that you can use more than eight
-  pages as long as the additional pages contain \emph{only} cited references.}
-\medskip
 
 \small
 
-[1] Alexander, J.A.\ \& Mozer, M.C.\ (1995) Template-based algorithms for
-connectionist rule extraction. In G.\ Tesauro, D.S.\ Touretzky and T.K.\ Leen
-(eds.), {\it Advances in Neural Information Processing Systems 7},
-pp.\ 609--616. Cambridge, MA: MIT Press.
+[1] S.P. Meyn \ \& R.L Tweedie\ (2005) Markov Chains and Stochastic Stability, Springer-Verlag.
 
-[2] Bower, J.M.\ \& Beeman, D.\ (1995) {\it The Book of GENESIS: Exploring
-  Realistic Neural Models with the GEneral NEural SImulation System.}  New York:
-TELOS/Springer--Verlag.
+[2] Charles J. Geyer D.\ (2005) Markov Chain Monte Carlo Lecture Notes
 
-[3] Hasselmo, M.E., Schnell, E.\ \& Barkai, E.\ (1995) Dynamics of learning and
-recall at excitatory recurrent synapses and cholinergic modulation in rat
-hippocampal region CA3. {\it Journal of Neuroscience} {\bf 15}(7):5249-5262.
+[3] Michael Betancourt \ (2014) A Conceptual Introduction Hamiltonian Monte Carlo 
+
+[4] Radford M. Neal \ (2011) MCMC using Hamiltonian dynamics, Appears as Chapter 5 of the Handbook of Markov Chain Monte Carlo, CRC Press, 2011
+
+[5] Paul Vanetti, George Deligiannidis \ (2018) Piecewise-Deterministic Markov Chain Monte Carlo
+
+[6] Nilesh Tripuraneni, Mark Rowland, Zoubin Ghahramani, Richard Turner\ (2017) Magnetic Hamiltonian Monte Carlo
 
 \end{document}
