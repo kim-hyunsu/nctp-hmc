@@ -62,10 +62,141 @@
 Probabilistic inference is one of the important concepts in machine learning. However, many problems still exist while sampling from high dimensional distribution or multimodal distributions. Many researchers try to solve this problem using existing physical concepts. We propose a new algorithm using non-canonical Hamiltonian dynamics and copied and pasted independent probabilistic distribution.  In this algorithm, two particles interacts each other while sampling the one target distribution. This interaction might solve existing problems in probabilistic sampling since interaction can make the trace of each particle more broadly.   
  \end{abstract}
 \section{Introduction}
-\section{Research Purpose}
-\section{Theoretical Background}
-\section{Results}
+Markov Chain Monte Carlo is a method for sampling from a probability distribution. It is used to approximate the normalization term of high dimensional integral in Bayesian inference. (J. Charles \textit{et al})., 2005)
 
+Although the existing algorithms of Markov Chain Monte Carlo, such as Metropolis-Hastings algorithm and Gibbs sampling, are easy to implement and analyze, they takes long time to explore entire space of given probability distribution. To solve this problem, in 1987, Simon Duane, A.D. Kennedy, Brian Pendleton and Dun can Roweth invented a Markov Chain Monte Carlo algorithm using Hamiltonian dynamics, which is called Hamiltonian Monte Carlo (also known as Hybrid Monte Carlo). (S. Duane \textit{et al}., 1987)
+
+Sampling probability distributions using the Hamiltonian Monte Carlo algorithm can be thought of like a ball rolling on a mountain that represents the probability distribution. High peaks indicate high-density regions in the probability distribution. On the contrary, low-altitude mountain ranges mean areas with low density on the probability distribution. Let's assume that we roll a ball at the high peaks. At first, the ball will not be so fast. The speed will increase as the ball goes down. If we shoot this scene in periodic time, we will get more pictures of the ball when the ball is slow. In other words, more sampling is done in high mountain peaks that represent high density on a probability distribution. This is the principle of Hamiltonian Monte Carlo.
+
+Hamiltonian Monte Carlo needs two mechanical energies to interpret a movement of a particle. It maps the probability distribution to the potential energy of a particle. In addition, It sets arbitrary kinetic energy (mostly a quadratic form of momentum). Depending on the formula of the kinetic energy of this particle, how the particle finds out the probability distribution is determined.
+
+We have fundamentally changed the Hamiltonian Monte Carlo algorithm. Using Hamiltonian dynamics is the same, but we exploited two particles instead of one particle. Each particle traverses different regions of the probability distribution and they can communicate with each other through a kind of electromagnetic field generated from each particle. We proved those changes do not violate the theoretical validity of the Hamiltonian Monte Carlo algorithm.
+
+\section{Theoretical Background}
+\subsection{Hamiltonian Monte Carlo}
+Pulling the aforementioned physical intuition of the ball back into the probabilistic perspective, the key is to expand our original probabilistic system with the introduction of auxiliary momentum parameters, $p_{n}$, to complement each dimension of our target parameter space,
+\[
+q_{n} \rightarrow (q_{n}, p_{n})
+\]
+expanding the D-dimensional parameter space into a 2D-dimensional phase space. We can now convert the target distribution into a joint probability on phase space, which is called the canonical distribution.
+\[
+\pi(q,p) = \pi(p|q)\pi(q)
+\]
+If we want to get target distribution, $\pi(q)$, we just marginalize out the momentum, $p$.
+We can write it in terms of an invariant Hamiltonian, $H(q,p)$,
+\[
+\pi(q,p) = e^{-H(q,p)}
+\]
+\[
+H(q,p) = -\log\pi(q,p)
+\]
+It preserves invariant probabilistic structure of the phase space and the value of the Hamiltonian in phase space is called the energy in physical perspective. It decomposes into two terms,
+\[
+H(q,p) = -\log\pi(p | q) - \log\pi(q)
+\]
+\[
+        =       K(p,q)    +  V(q)
+\]
+$K(p,q)$ is called kinetic energy and $V(q)$ is called potential energy. So, we can describe the evolution of the $q$ and $p$ over time by the Hamiltonian,. which is,
+\[
+\frac{dq}{dt} = +\frac{\partial H}{\partial p} = \frac{\partial K}{\partial p}
+\]
+\[
+\frac{dp}{dt} = -\frac{\partial H}{\partial q} = -\frac{\partial K}{\partial q} - \frac{\partial V}{\partial q}
+\]
+To convert into discretized algorithm, we will should a symplectic integrator called \textit{leapfrog} integrator,
+\begin{algorithmic}
+\STATE $q_0 \leftarrow q, p_0 \leftarrow p$
+\FOR {$0 \leq n < \frac{T}{\epsilon}$}
+\STATE $p_{n+\frac{1}{2}} \leftarrow p_{n} - \frac{\epsilon}{2}\frac{\partial V}{\partial q}(q_{n})$
+\STATE $q_{n+1} \leftarrow q_{n} + \epsilon p_{n+\frac{1}{2}}$
+\STATE $p_{n+1} \leftarrow p_{n+\frac{1}{2}} - \frac{\epsilon}{2}\frac{\partial V}{\partial q}(q_{n+1})$
+\ENDFOR.
+\end{algorithmic}
+(M. Betancourt., 2014)
+
+\subsection{Magnetic Hamiltonian Monte Carlo}
+We used canonical Hamilton equations in Hamiltonian Monte Carlo. However, if some conditions are satisfied, we can use another Hamilton equations called non-canonical Hamiltonian equation. The canonical Hamiltonian equation is able to be described as
+\[
+\frac{d}{dt}
+\left[
+\begin{array}{ccc}
+q(t) \\
+p(t)
+\end{array}
+\right]
+=
+\left[
+\begin{array}{cclcc}
+\textbf{0} & \textbf{I} \\
+-\textbf{I} & \textbf{0}
+\end{array}
+\right]
+\left[
+\begin{array}{ccc}
+\nabla_{q} H(q(t), p(t)) \\
+\nabla_{p} H(q(t), p(t))
+\end{array}
+\right]
+\]
+\[
+=
+\left[
+\begin{array}{cclcc}
+\textbf{0} & \textbf{I} \\
+-\textbf{I} & \textbf{0}
+\end{array}
+\right]
+\left[
+\begin{array}{ccc}
+\nabla_{q} U(q(t)) \\
+\nabla_{p} K(p(t))
+\end{array}
+\right]
+\]
+\[
+=
+\left[
+\begin{array}{ccc}
+\textbf{p}(t) \\
+-\nabla_{q} U(q(t))
+\end{array}
+\right]
+\]
+when $K(p(t)) = q^2/2$. On the contrary, the non-canonical Hamiltonian equation is described as
+\[
+\frac{d}{dt}
+\left[
+\begin{array}{ccc}
+q(t) \\
+p(t)
+\end{array}
+\right]
+=
+\left[
+\begin{array}{cclcc}
+\textbf{E} & \textbf{F} \\
+-\textbf{F}^{T} & \textbf{G}
+\end{array}
+\right]
+\left[
+\begin{array}{ccc}
+\nabla_{q} H(q(t), p(t)) \\
+\nabla_{p} H(q(t), p(t))
+\end{array}
+\right]
+\]
+To check out whether it preserves its energy(Hamiltonian) since it is a necessary condition of Hamiltonian Monte Carlo, we should compute Poisson brackets. The Poisson bracket of the non-canonical Hamilton equation is following,
+$$\displaystyle\frac{dQ}{dt}
+ = (\nabla_{q}Q)^T F \nabla_{p}H(p,q) - (\nabla_{p}Q)^T F^T \nabla_{q}H(p,q) + (\nabla_{q}Q)^T E \nabla_{q}H(p,q) + (\nabla_{p}Q)^T G \nabla_{p}H(p,q)$$
+This value should be zero to preserve the energy when Q is Hamiltonian, $H(p,q)$, that is,
+\[\displaystyle(\nabla_{q}H(p,q))^T F \nabla_{p}H(p,q) - (\nabla_{p}H(p,q))^T F^T \nabla_{q}H(p,q)\]
+\[+ (\nabla_{q}H(p,q))^T E \nabla_{q}H(p,q) + (\nabla_{p}H(p,q))^T G \nabla_{p}H(p,q) = 0.\]
+Then, first two terms are Poisson bracket of canonical Hamilton equation, which is zero. we denote rest of the term,
+$$(\nabla_{q}H(p,q))^T E \nabla_{q}H(p,q) + (\nabla_{p}H(p,q))^T G \nabla_{p}H(p,q) = 0.$$
+This means both E and G are anti-symmetric matrices. (N. Tripuraneni \textit{et al}., 2017)
+
+\section{Results}
 \subsection{Algorithmic Background}
 
 Consider the case we sample $q$ from the distribution $\pi(q)$. From now, we consider the case as sampling the distribution $\pi(q_1 , q_2 ) = \pi(q_1)\pi (q_2)$. (Copy and paste the target distribution) we assume $q_1$ and $q_2$ has the momentum, $p_1$ and $p_2$, respectively, with $p_1$, $p_2 \sim N(0,I)$. Then the Hamiltonian is defined by $\displaystyle H(q_1, q_2, p_1, p_2)  = U(q_1) +U(q_2)+\frac{1}{2}{p_1}^T p_1 + \frac{1}{2}{p_2}^T p_2$. We observe what happens to this assumption in non-canonical Hamiltonian dynamics with $A \in \mathbbm{R}^{4n \times 4n} $. We denote $A$ as
@@ -355,7 +486,38 @@ $$\displaystyle\Phi_{H,\epsilon} = \Phi_{H_1,\epsilon} \circ \Phi_{H_2,\epsilon}
 
 $$\displaystyle\tilde{\Phi}_{H,\epsilon} = \Phi_{p} \circ \Phi_{E,G} \circ (\Phi_{H_1,\epsilon} \circ \Phi_{H_2,\epsilon} \circ \Phi_{H_3,\epsilon} \circ \Phi_{H_2,\epsilon} \circ \Phi_{H_1,\epsilon})^L$$
 
-Therefore, we can make an algorithm for sampling by making a loop with flipping block matrices and momentum (sampled by standard normal), and doing leapfrog steps with given step size $\epsilon$ (local) and $L$ (global). 
+Therefore, we can make an algorithm for sampling by making a loop with flipping block matrices and momentum (sampled by standard normal), and doing leapfrog steps with given step size $\epsilon$ (local) and $L$ (global).
+
+\subsection{Algorithm}
+We established our algorithm based on the Magnetic Hamiltonian Monte Carlo algorithm.
+\\
+\\
+\\
+\\
+\\
+\begin{algorithm}
+\caption{Non-Canonical Hamiltonian Monte Carlo Algorithm for Two Particles}
+\begin{algorithmic}[1]
+
+\begin{enumerate}
+\item Initialize $(q_1, q_2, p_1, p_2)_0$ on phase space.
+\item For n = 1, 2, \ldots, $\floor{\frac{T}{\epsilon}}$ where T is total time and $\epsilon$ is a discretized time quantum. 
+\begin{enumerate}
+\item $(q_1, q'_2, p'_1, p'_2)_{n-1} \leftarrow \Phi_{H_1,\epsilon}(q_1, q_2, p_1, p_2)_{n-1}$
+\item $(q'_1, q'_2, p''_1, p''_2)_{n-1} \leftarrow \Phi_{H_2,\epsilon}(q_1, q'_2, p'_1, p'_2)_{n-1}$
+\item $(q''_1, q''_2, p'''_1, p'''_2)_{n-1} \leftarrow \Phi_{H_3,\epsilon}(q'_1, q'_2, p''_1, p''_2)_{n-1}$
+\item $(q''_1, q'''_2, p''''_1, p''''_2)_{n-1} \leftarrow \Phi_{H_2,\epsilon}(q''_1, q''_2, p'''_1, p'''_2)_{n-1}$
+\item $(q'''_1, q'''_2, p'''''_1, p'''''_2)_{n-1} \leftarrow \Phi_{H_1,\epsilon}(q''_1, q'''_2, p''''_1, p''''_2)_{n-1}$
+\item If $$ Unif([0, 1])<min(1,exp(H((q_1, q_2, p_1, p_2)_{n-1})
+-H((q'''_1, q'''_2, p'''''_1, p'''''_2)_{n-1})$$ \\
+then $(q_1, q_2, p_1, p_2)_{n} \leftarrow (q'''_1, q'''_2, p'''''_1, p'''''_2)_{n-1}$ \\
+otherwise $(q_1, q_2, p_1, p_2)_{n} \leftarrow (q_1, q_2, p_1, p_2)_{n-1}$
+\end{enumerate}
+\item Return $(q_1, q_2)_{n}$ 
+\end{enumerate}
+
+\end{algorithmic}
+\end{algorithm}
 
 \section{Conclusion}
 
@@ -374,16 +536,18 @@ Furthermore, our algorithm can be generalized with more than 2 particles, not ju
 
 \small
 
-[1] S.P. Meyn \ \& R.L Tweedie\ (2005) Markov Chains and Stochastic Stability, Springer-Verlag.
+[1] S. Duane, A.D. Kennedy, B. J. Pendleton, D. Roweth, (1987) Hybrid Monte Carlo, Physics Letters B.
 
-[2] Charles J. Geyer D.\ (2005) Markov Chain Monte Carlo Lecture Notes
+[2] S.P. Meyn \ \& R.L Tweedie\ (2005) Markov Chains and Stochastic Stability, Springer-Verlag.
 
-[3] Michael Betancourt \ (2014) A Conceptual Introduction Hamiltonian Monte Carlo 
+[3] Charles J. Geyer D.\ (2005) Markov Chain Monte Carlo Lecture Notes
 
-[4] Radford M. Neal \ (2011) MCMC using Hamiltonian dynamics, Appears as Chapter 5 of the Handbook of Markov Chain Monte Carlo, CRC Press, 2011
+[4] Michael Betancourt \ (2014) A Conceptual Introduction Hamiltonian Monte Carlo 
 
-[5] Paul Vanetti, George Deligiannidis \ (2018) Piecewise-Deterministic Markov Chain Monte Carlo
+[5] Radford M. Neal \ (2011) MCMC using Hamiltonian dynamics, Appears as Chapter 5 of the Handbook of Markov Chain Monte Carlo, CRC Press, 2011
 
-[6] Nilesh Tripuraneni, Mark Rowland, Zoubin Ghahramani, Richard Turner\ (2017) Magnetic Hamiltonian Monte Carlo
+[6] Paul Vanetti, George Deligiannidis \ (2018) Piecewise-Deterministic Markov Chain Monte Carlo
+
+[7] Nilesh Tripuraneni, Mark Rowland, Zoubin Ghahramani, Richard Turner\ (2017) Magnetic Hamiltonian Monte Carlo
 
 \end{document}
