@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage{bbm}
 % if you need to pass options to natbib, use, e.g.:
-%     \PassOptionsToPackage{numbers, compress}{natbib}
+    % \PassOptionsToPackage{numbers, compress}{natbib}
 % before loading neurips_2018
 
 % ready for submission
@@ -15,7 +15,7 @@
      \usepackage[final]{neurips_2018}
 
 % to avoid loading the natbib package, add option nonatbib:
-%     \usepackage[nonatbib]{neurips_2018}
+    % \usepackage[nonatbib]{neurips_2018}
 
 \usepackage[utf8]{inputenc} % allow utf-8 input
 \usepackage[T1]{fontenc}    % use 8-bit T1 fonts
@@ -27,6 +27,7 @@
 \usepackage{microtype}      % microtypography
 \usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage{mathtools}
 
 \title{Non-Canonical Hamiltonian Monte Carlo Algorithm for Two Particles}
 
@@ -489,7 +490,11 @@ $$\displaystyle\tilde{\Phi}_{H,\epsilon} = \Phi_{p} \circ \Phi_{E,G} \circ (\Phi
 Therefore, we can make an algorithm for sampling by making a loop with flipping block matrices and momentum (sampled by standard normal), and doing leapfrog steps with given step size $\epsilon$ (local) and $L$ (global).
 
 \subsection{Algorithm}
+\newcounter{rownumbers}
+\newcommand\rownumber{\stepcounter{rownumbers}\arabic{rownumbers}}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 We established our algorithm based on the Magnetic Hamiltonian Monte Carlo algorithm.
+\\
 \\
 \\
 \\
@@ -497,12 +502,11 @@ We established our algorithm based on the Magnetic Hamiltonian Monte Carlo algor
 \\
 \begin{algorithm}
 \caption{Non-Canonical Hamiltonian Monte Carlo Algorithm for Two Particles}
-\begin{algorithmic}[1]
-
-\begin{enumerate}
-\item Initialize $(q_1, q_2, p_1, p_2)_0$ on phase space.
-\item For n = 1, 2, \ldots, $\floor{\frac{T}{\epsilon}}$ where T is total time and $\epsilon$ is a discretized time quantum. 
-\begin{enumerate}
+\begin{algorithmic}
+\STATE\begin{enumerate}
+  \STATE Initialize $(q_1, q_2, p_1, p_2)_0$ on phase space.
+  \STATE For n = 1, 2, \ldots, $\floor{\frac{T}{\epsilon}}$ where T is total time and $\epsilon$ is a discretized time quantum. 
+  \begin{enumerate}
 \item $(q_1, q'_2, p'_1, p'_2)_{n-1} \leftarrow \Phi_{H_1,\epsilon}(q_1, q_2, p_1, p_2)_{n-1}$
 \item $(q'_1, q'_2, p''_1, p''_2)_{n-1} \leftarrow \Phi_{H_2,\epsilon}(q_1, q'_2, p'_1, p'_2)_{n-1}$
 \item $(q''_1, q''_2, p'''_1, p'''_2)_{n-1} \leftarrow \Phi_{H_3,\epsilon}(q'_1, q'_2, p''_1, p''_2)_{n-1}$
@@ -513,7 +517,7 @@ We established our algorithm based on the Magnetic Hamiltonian Monte Carlo algor
 then $(q_1, q_2, p_1, p_2)_{n} \leftarrow (q'''_1, q'''_2, p'''''_1, p'''''_2)_{n-1}$ \\
 otherwise $(q_1, q_2, p_1, p_2)_{n} \leftarrow (q_1, q_2, p_1, p_2)_{n-1}$
 \end{enumerate}
-\item Return $(q_1, q_2)_{n}$ 
+\STATE Return $(q_1, q_2)_{n}$ 
 \end{enumerate}
 
 \end{algorithmic}
@@ -549,5 +553,4 @@ Furthermore, our algorithm can be generalized with more than 2 particles, not ju
 [6] Paul Vanetti, George Deligiannidis \ (2018) Piecewise-Deterministic Markov Chain Monte Carlo
 
 [7] Nilesh Tripuraneni, Mark Rowland, Zoubin Ghahramani, Richard Turner\ (2017) Magnetic Hamiltonian Monte Carlo
-
 \end{document}
